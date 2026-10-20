@@ -1,74 +1,403 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MoneyTag — কাজ খুঁজুন, কাজ দিন, দক্ষতার মাধ্যমে এগিয়ে যান।">
-  <title>MoneyTag — Freelance Marketplace</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js"></script>
-  <script defer src="app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moneytag | Work & Hire - অনলাইন ফ্রিল্যান্সিং ও সেবা মার্কেটপ্লেস</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        /* Clean White Modern Card & Glassmorphism styles for Light Mode */
+        .white-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .white-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .custom-input {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+        }
+
+        .custom-input:focus {
+            background: #ffffff;
+            border-color: #059669;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-online {
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #22c55e;
+        }
+    </style>
 </head>
-<body>
-<header class="topbar">
-  <a class="brand" href="#" aria-label="MoneyTag Home"><img class="brand-logo" src="moneytag-logo.png" alt="MoneyTag Work & Hire logo"></a>
-  <nav><a href="#jobs">কাজ খুঁজুন</a><a href="#how">কীভাবে কাজ করে</a></nav>
-  <div class="nav-actions"><button class="btn btn-quiet" id="loginOpen">লগইন</button><button class="btn btn-primary" id="signupOpen">শুরু করুন</button><button class="btn btn-quiet hidden" id="logoutBtn">লগআউট</button></div>
-</header>
-<main>
-  <section class="hero">
-    <div class="hero-copy">
-      <span class="eyebrow"><span class="pulse"></span> বাংলাদেশের কাজ ও দক্ষতার মার্কেটপ্লেস</span>
-      <h1>আপনার দক্ষতা,<br><span class="gradient">আপনার পরবর্তী সুযোগ।</span></h1>
-      <p>দক্ষতা দিয়ে কাজ খুঁজুন, সঠিক মানুষ খুঁজে কাজ করান। MoneyTag-এ আপনার পরবর্তী সম্ভাবনা শুরু হোক।</p>
-      <div class="hero-actions"><a class="btn btn-primary btn-large" href="#jobs">কাজ খুঁজুন <span>↗</span></a><button class="btn btn-outline btn-large" id="postJobHero">কাজ পোস্ট করুন</button></div>
-      <div class="trust-row"><span>✓ ফ্রিল্যান্সার ও ক্লায়েন্ট</span><span>✓ প্রোফাইল ও আবেদন</span><span>✓ নিরাপদ অ্যাকাউন্ট</span></div>
-    </div>
-    <div class="hero-art">
-      <div class="orb orb-one"></div><div class="orb orb-two"></div>
-      <div class="dashboard-card">
-        <div class="dash-top"><div><small>আপনার পরবর্তী সুযোগ</small><h3>প্রজেক্ট ড্যাশবোর্ড</h3></div><span class="live-pill">● LIVE APP</span></div>
-        <div class="dash-stat"><div class="stat-icon">✦</div><div><strong>নতুন দক্ষতা, নতুন কাজ</strong><small>আপনার প্রোফাইল তৈরি করুন</small></div><span class="arrow">↗</span></div>
-        <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="dash-bottom"><span>আপনার যাত্রা</span><b>এখান থেকেই শুরু</b></div>
-      </div>
-      <div class="float-card float-connect"><span class="float-icon">⚡</span><div><b>100 Connects</b><small>শুরুর Connects*</small></div></div>
-      <div class="float-card float-work"><span class="avatar">✓</span><div><b>দক্ষতা কাজে লাগান</b><small>একটি প্রোফাইল দিয়ে শুরু</small></div></div>
-    </div>
-  </section>
-  <section class="category-section">
-    <div class="section-heading"><div><span class="eyebrow">আপনার দক্ষতার ক্ষেত্র</span><h2>কোন কাজে দক্ষ আপনি?</h2></div><p>ক্যাটাগরি বেছে নিয়ে প্রাসঙ্গিক কাজ খুঁজুন।</p></div>
-    <div class="categories" id="categories"></div>
-  </section>
-  <section class="jobs-section" id="jobs">
-    <div class="section-heading"><div><span class="eyebrow">সুযোগের তালিকা</span><h2>সাম্প্রতিক কাজ</h2></div><div class="job-controls"><input id="jobSearch" placeholder="কাজ খুঁজুন..." aria-label="কাজ খুঁজুন"><select id="categoryFilter" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select><button class="btn btn-primary" id="postJobBtn">+ কাজ পোস্ট</button></div></div>
-    <div id="statusBanner" class="status-banner">Supabase সেটআপ না করা থাকলে নিচে সেটআপ নির্দেশনা দেখাবে।</div>
-    <div id="jobsGrid" class="jobs-grid"><div class="empty-state"><div class="empty-icon">⌕</div><h3>কাজ লোড হচ্ছে...</h3><p>একটু অপেক্ষা করুন।</p></div></div>
-  </section>
-  <section class="how-section" id="how">
-    <span class="eyebrow">সহজ তিনটি ধাপ</span><h2>MoneyTag-এ শুরু করুন</h2>
-    <div class="steps"><article><span>01</span><h3>অ্যাকাউন্ট তৈরি</h3><p>ফ্রিল্যান্সার অথবা ক্লায়েন্ট হিসেবে নিবন্ধন করুন।</p></article><article><span>02</span><h3>কাজ বা দক্ষতা যোগ করুন</h3><p>প্রোফাইল পূরণ করুন, কাজ পোস্ট করুন অথবা আবেদন করুন।</p></article><article><span>03</span><h3>কাজ এগিয়ে নিন</h3><p>আবেদন ও কাজের অবস্থা অ্যাকাউন্ট থেকে পরিচালনা করুন।</p></article></div>
-  </section>
-  <section class="cta"><div><span class="eyebrow">আপনার পরবর্তী অধ্যায়</span><h2>দক্ষতাকে সুযোগে বদলে দিন।</h2><p>আজই MoneyTag-এ আপনার অ্যাকাউন্ট তৈরি করুন।</p></div><button class="btn btn-light btn-large" id="signupBottom">বিনামূল্যে শুরু করুন ↗</button></section>
-</main>
-<footer><a class="brand footer-brand" href="#" aria-label="MoneyTag Home"><img class="brand-logo footer-logo" src="moneytag-logo.png" alt="MoneyTag Work & Hire logo"></a><p>© <span id="year"></span> MoneyTag. দক্ষতা ও কাজের সংযোগ।</p><div><a href="#jobs">কাজ</a><a href="#how">সহায়তা</a><a href="privacy.html">Privacy</a></div></footer>
+<body class="bg-slate-50 text-slate-800">
 
-<div class="modal-backdrop hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle"><div class="modal">
-  <button class="modal-close" data-close="authModal" aria-label="বন্ধ করুন">×</button><span class="eyebrow">MoneyTag অ্যাকাউন্ট</span><h2 id="authTitle">স্বাগতম</h2><p class="modal-sub" id="authSubtitle">আপনার অ্যাকাউন্টে প্রবেশ করুন।</p>
-  <div class="tabs"><button class="tab active" id="loginTab">লগইন</button><button class="tab" id="signupTab">নতুন অ্যাকাউন্ট</button></div>
-  <form id="authForm"><div id="nameField" class="field hidden"><label for="fullName">আপনার নাম</label><input id="fullName" autocomplete="name" placeholder="পূর্ণ নাম"></div>
-  <div class="field"><label for="authEmail">ইমেইল</label><input id="authEmail" type="email" required autocomplete="email" placeholder="name@example.com"></div>
-  <div class="field"><label for="authPassword">পাসওয়ার্ড</label><input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="কমপক্ষে ৮ অক্ষর"></div>
-  <div id="roleField" class="field hidden"><label for="accountRole">আপনি কী করতে চান?</label><select id="accountRole"><option value="freelancer">ফ্রিল্যান্সার — কাজ খুঁজব</option><option value="client">ক্লায়েন্ট — কাজ করাব</option></select></div>
-  <button class="btn btn-primary btn-full" id="authSubmit" type="submit">লগইন করুন</button><p class="form-message" id="authMessage" aria-live="polite"></p></form>
-</div></div>
+    <!-- Top Navigation Bar -->
+    <nav class="nav-glass sticky top-0 z-50 px-6 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <!-- User Logo Representation matching user brand -->
+            <div class="flex items-center gap-1.5 font-extrabold text-2xl tracking-tight">
+                <span class="text-[#16a34a]">Money</span><span class="text-[#0f172a]">tag</span>
+                <span class="text-slate-300 font-light mx-1">|</span>
+                <span class="text-sm font-semibold uppercase tracking-wider text-[#0f172a] bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">Work & Hire</span>
+            </div>
+        </div>
 
-<div class="modal-backdrop hidden" id="jobModal" role="dialog" aria-modal="true" aria-labelledby="jobModalTitle"><div class="modal">
-  <button class="modal-close" data-close="jobModal" aria-label="বন্ধ করুন">×</button><span class="eyebrow">নতুন সুযোগ</span><h2 id="jobModalTitle">কাজ পোস্ট করুন</h2><p class="modal-sub">কাজ প্রকাশ করতে ক্লায়েন্ট অ্যাকাউন্টে লগইন করুন।</p>
-  <form id="jobForm"><div class="field"><label for="jobTitle">কাজের শিরোনাম</label><input id="jobTitle" required maxlength="120" placeholder="যেমন: একটি লোগো ডিজাইন করতে হবে"></div>
-  <div class="field"><label for="jobDescription">কাজের বিবরণ</label><textarea id="jobDescription" required minlength="20" maxlength="5000" rows="4" placeholder="কাজের প্রয়োজনীয়তা বিস্তারিত লিখুন..."></textarea></div>
-  <div class="form-row"><div class="field"><label for="jobCategory">ক্যাটাগরি</label><select id="jobCategory" required></select></div><div class="field"><label for="jobBudget">বাজেট (৳)</label><input id="jobBudget" type="number" min="1" max="10000000" required placeholder="5000"></div></div>
-  <button class="btn btn-primary btn-full" type="submit">কাজ প্রকাশ করুন</button><p class="form-message" id="jobMessage" aria-live="polite"></p></form>
-</div></div>
-<div class="toast" id="toast" role="status"></div>
-</body></html>
+        <div class="hidden md:flex items-center gap-7 text-slate-600 font-medium text-sm">
+            <a href="#services" class="hover:text-emerald-600 transition">কাজের সেক্টর</a>
+            <a href="#connects" class="hover:text-emerald-600 transition">কানেক্ট প্যাক</a>
+            <a href="#marketplace" class="hover:text-emerald-600 transition">মার্কেটপ্লেস</a>
+            <a href="#promotions" class="hover:text-emerald-600 transition">ভিডিও এড ও প্রমোশন</a>
+            <a href="#escrow" class="hover:text-emerald-600 transition">নিরাপদ এস্ক্রো</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- User Profile Status (Hidden by default, shown after login) -->
+            <div id="user-status" class="hidden flex items-center gap-3 bg-white px-3 py-1.5 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="relative">
+                    <img id="user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="w-9 h-9 rounded-full object-cover border border-emerald-500">
+                    <span class="w-3 h-3 bg-green-500 rounded-full absolute bottom-0 right-0 status-online"></span>
+                </div>
+                <div class="text-xs">
+                    <p id="user-name" class="font-bold text-slate-800">ইউজার নাম</p>
+                    <p class="text-emerald-600 font-semibold">ওয়ালেট: <span id="wallet-bal">৳০</span> | কানেক্ট: <span id="connect-bal">১০০</span></p>
+                </div>
+                <button onclick="logout()" class="ml-2 px-2.5 py-1 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 text-xs transition font-medium">লগআউট</button>
+            </div>
+
+            <!-- Auth Buttons -->
+            <div id="auth-buttons" class="flex items-center gap-3">
+                <button onclick="openModal('loginModal')" class="px-4 py-2 rounded-xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 text-sm font-semibold transition shadow-sm">লগইন</button>
+                <button onclick="openModal('registerModal')" class="px-4 py-2 rounded-xl bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold transition shadow-md shadow-emerald-600/20">রেজিস্ট্রেশন</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-7xl mx-auto px-6 py-16 text-center">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold tracking-wide uppercase">
+            ✓ এনআইডি ও জন্ম নিবন্ধন ভেরিফাইড নিরাপদ প্ল্যাটফর্ম
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 text-slate-900 leading-tight">
+            অনলাইনে কাজ করে টাকা আয় করুন <br><span class="brand-gradient">কিংবা আপনার কাজের জন্য সেরা ফ্রিল্যান্সার বায়ার হায়ার করুন</span>
+        </h1>
+        <p class="text-slate-600 text-lg max-w-3xl mx-auto mb-10">
+            ডিজিটাল ফ্রিল্যান্সিং থেকে শুরু করে স্বশরীরে কাজ (আইনজীবী, ডেলিভারিম্যান, দিনমজুর, ট্যুর গাইড, গার্মেন্টস কর্মী) — সবকিছুর জন্য বিকাশ, নগদ, রকেট ও ব্যাংক এস্ক্রো পেমেন্ট সিস্টেম।
+        </p>
+
+        <!-- Quick Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div class="white-card p-6 rounded-2xl text-center">
+                <i class="fa-solid fa-shield-halved text-3xl text-emerald-600 mb-2"></i>
+                <h3 class="font-bold text-base text-slate-800">৫% মেইনটেন্যান্স ফি</h3>
+                <p class="text-xs text-slate-500">নিরাপদ কাজ শেষে পে-আউট</p>
+            </div>
+            <div class="white-card p-6 rounded-2xl text-center">
+                <i class="fa-solid fa-id-card text-3xl text-blue-600 mb-2"></i>
+                <h3 class="font-bold text-base text-slate-800">NID ভেরিফিকেশন</h3>
+                <p class="text-xs text-slate-500">সবুজে অনলাইন সিগন্যাল</p>
+            </div>
+            <div class="white-card p-6 rounded-2xl text-center">
+                <i class="fa-solid fa-bolt text-3xl text-amber-500 mb-2"></i>
+                <h3 class="font-bold text-base text-slate-800">১০০ ফ্রি কানেক্ট</h3>
+                <p class="text-xs text-slate-500">নিবন্ধনেই ফ্রি অফার</p>
+            </div>
+            <div class="white-card p-6 rounded-2xl text-center">
+                <i class="fa-solid fa-comments text-3xl text-purple-600 mb-2"></i>
+                <h3 class="font-bold text-base text-slate-800">সুরক্ষিত চ্যাটবক্স</h3>
+                <p class="text-xs text-slate-500">ফাইল ও পিডিএফ জমা দিন</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Work Categories Section -->
+    <section id="services" class="max-w-7xl mx-auto px-6 py-12">
+        <h2 class="text-3xl font-bold text-center mb-3 text-slate-900">সকল কাজের সেক্টরসমূহ</h2>
+        <p class="text-center text-slate-500 mb-10 text-sm">আপনার পছন্দের ক্যাটাগরি বেছে নিন এবং কাজ শুরু করুন</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Digital & Graphic Sector -->
+            <div class="white-card p-6 rounded-2xl">
+                <div class="flex items-center gap-3 mb-4 text-emerald-600">
+                    <i class="fa-solid fa-laptop-code text-2xl"></i>
+                    <h3 class="text-xl font-bold text-slate-800">ডিজিটাল ও আইটি সেক্টর</h3>
+                </div>
+                <ul class="space-y-2.5 text-slate-600 text-sm">
+                    <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i>মাইক্রোসফট অফিস ও ডাটা এন্ট্রি</li>
+                    <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i>গ্রাফিক ডিজাইন ও ফটোশপ</li>
+                    <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i>ডাটা এনালাইসিস কাজ</li>
+                    <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i>কম্পিউটার অপারেটর</li>
+                </ul>
+            </div>
+
+            <!-- Marketing & Monetization Sector -->
+            <div class="white-card p-6 rounded-2xl">
+                <div class="flex items-center gap-3 mb-4 text-blue-600">
+                    <i class="fa-solid fa-bullhorn text-2xl"></i>
+                    <h3 class="text-xl font-bold text-slate-800">মার্কেটিং ও মনিটাইজেশন</h3>
+                </div>
+                <ul class="space-y-2.5 text-slate-600 text-sm">
+                    <li><i class="fa-solid fa-circle-check text-blue-500 mr-2"></i>ব্র্যান্ড প্রমোশন ও ডিজিটাল মার্কেটিং</li>
+                    <li><i class="fa-solid fa-circle-check text-blue-500 mr-2"></i>ফেসবুক ও ইউটিউব মনিটাইজেশন</li>
+                    <li><i class="fa-solid fa-circle-check text-blue-500 mr-2"></i>ফেসবুক পে-আউট ও এড রানিং</li>
+                    <li><i class="fa-solid fa-circle-check text-blue-500 mr-2"></i>ভিডিও এড প্রমোশন প্যানেল</li>
+                </ul>
+            </div>
+
+            <!-- Physical & Manpower Hiring Sector -->
+            <div class="white-card p-6 rounded-2xl">
+                <div class="flex items-center gap-3 mb-4 text-amber-600">
+                    <i class="fa-solid fa-user-tie text-2xl"></i>
+                    <h3 class="text-xl font-bold text-slate-800">স্বশরীরে কাজ ও হায়ারিং</h3>
+                </div>
+                <ul class="space-y-2.5 text-slate-600 text-sm">
+                    <li><i class="fa-solid fa-circle-check text-amber-500 mr-2"></i>উকিল ও আইনি সহায়তা হায়ার</li>
+                    <li><i class="fa-solid fa-circle-check text-amber-500 mr-2"></i>ডেলিভারি ম্যান ও দিনমজুর হায়ার</li>
+                    <li><i class="fa-solid fa-circle-check text-amber-500 mr-2"></i>পর্যটন গাইড ও ব্যবস্থাপক হায়ার</li>
+                    <li><i class="fa-solid fa-circle-check text-amber-500 mr-2"></i>গার্মেন্টস কর্মী ও অন্যান্য জনবল</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connects Pricing Section -->
+    <section id="connects" class="max-w-7xl mx-auto px-6 py-12 bg-white rounded-3xl border border-slate-200 shadow-sm my-8">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">ফ্রিল্যান্সার কানেক্ট প্যাকেজ মূল্য</h2>
+            <p class="text-slate-500 text-sm">কাজের আবেদনের জন্য নির্দিষ্ট কানেক্ট কিনুন। প্রথম ১০০ কানেক্ট সম্পূর্ণ ফ্রি!</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl text-center">
+                <h4 class="font-bold text-slate-700">১০০ কানেক্ট</h4>
+                <p class="text-2xl font-extrabold text-emerald-600 my-2">৳৩০০</p>
+                <button onclick="buyConnect(100, 300)" class="w-full py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">কিনুন</button>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl text-center">
+                <h4 class="font-bold text-slate-700">২০০ কানেক্ট</h4>
+                <p class="text-2xl font-extrabold text-emerald-600 my-2">৳৫০০</p>
+                <button onclick="buyConnect(200, 500)" class="w-full py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">কিনুন</button>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl text-center">
+                <h4 class="font-bold text-slate-700">৩০০ কানেক্ট</h4>
+                <p class="text-2xl font-extrabold text-emerald-600 my-2">৳৭০০</p>
+                <button onclick="buyConnect(300, 700)" class="w-full py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">কিনুন</button>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl text-center">
+                <h4 class="font-bold text-slate-700">৫০০ কানেক্ট</h4>
+                <p class="text-2xl font-extrabold text-emerald-600 my-2">৳৮৫০</p>
+                <button onclick="buyConnect(500, 850)" class="w-full py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">কিনুন</button>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-300 p-5 rounded-2xl text-center relative">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">সেরা মূল্য</span>
+                <h4 class="font-bold text-slate-800 mt-1">১০০০ কানেক্ট</h4>
+                <p class="text-2xl font-extrabold text-emerald-600 my-2">৳১০০০</p>
+                <button onclick="buyConnect(1000, 1000)" class="w-full py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">কিনুন</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace & Video Ads Panel -->
+    <section id="marketplace" class="max-w-7xl mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900">পণ্য ক্রয়-বিক্রয় মার্কেটপ্লেস</h2>
+                <p class="text-slate-500 text-sm">শুধু ওয়ালেট ব্যালেন্স দিয়ে পণ্য কেনা যাবে (উন্নয়ন ফি: ২.৫%)</p>
+            </div>
+            <button onclick="openModal('addProductModal')" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> পণ্য পোস্ট করুন
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="white-card rounded-2xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&q=80&w=400" class="w-full h-44 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-base text-slate-800 mb-1">ক্যানভা প্রো সাবস্ক্রিপশন</h3>
+                    <p class="text-xs text-slate-500 mb-3">বিক্রেতা আইডি: #1024 (ভেরিফাইড)</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-extrabold text-emerald-600">৳৪৫০</span>
+                        <button onclick="buyProduct('ক্যানভা প্রো', 450)" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-medium">কিনুন</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="white-card w-full max-w-md p-8 rounded-3xl relative bg-white">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-2xl font-bold mb-6 text-slate-900">Moneytag লগইন</h3>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">ইমেইল এড্রেস</label>
+                    <input type="email" id="login-email" required class="w-full px-4 py-2.5 rounded-xl custom-input text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">পাসওয়ার্ড</label>
+                    <input type="password" id="login-password" required class="w-full px-4 py-2.5 rounded-xl custom-input text-sm">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-white shadow-lg shadow-emerald-600/20">লগইন করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="white-card w-full max-w-lg p-8 rounded-3xl relative max-h-[90vh] overflow-y-auto bg-white">
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-2xl font-bold mb-6 text-slate-900">রেজিস্ট্রেশন করুন</h3>
+            <form onsubmit="handleRegister(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">অ্যাকাউন্টের ধরন</label>
+                    <select id="reg-role" class="w-full px-4 py-2.5 rounded-xl custom-input text-sm">
+                        <option value="freelancer">ফ্রিল্যান্সার (কাজ করে আয় করতে চান)</option>
+                        <option value="client">বায়ার / ক্লায়েন্ট (লোক হায়ার করতে চান)</option>
+                        <option value="company">কোম্পানি / কর্পোরেট প্রতিষ্ঠান</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">পূর্ণ নাম</label>
+                    <input type="text" id="reg-name" required class="w-full px-4 py-2.5 rounded-xl custom-input text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">ইমেইল এড্রেস</label>
+                    <input type="email" id="reg-email" required class="w-full px-4 py-2.5 rounded-xl custom-input text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">মোবাইল নম্বর (বিকাশ/নগদ ভেরিফিকেশন)</label>
+                    <input type="tel" id="reg-phone" required class="w-full px-4 py-2.5 rounded-xl custom-input text-sm" placeholder="017xxxxxxxx">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">পাসওয়ার্ড</label>
+                    <input type="password" id="reg-password" required class="w-full px-4 py-2.5 rounded-xl custom-input text-sm">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-white shadow-lg shadow-emerald-600/20">একাউন্ট তৈরি করুন (১০০ কানেক্ট ফ্রি)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript & Supabase Integration Logic -->
+    <script>
+        const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+        
+        let supabaseClient = null;
+        if(SUPABASE_URL !== "YOUR_SUPABASE_PROJECT_URL") {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('flex');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('flex');
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        let currentUser = null;
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            currentUser = {
+                name: name,
+                wallet: 0,
+                connects: 100
+            };
+            updateUI();
+            closeModal('registerModal');
+            alert('অভিনন্দন! সফলভাবে একাউন্ট তৈরি হয়েছে এবং ১০০ ফ্রি কানেক্ট যোগ করা হয়েছে।');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            currentUser = {
+                name: "মোঃ নাজমুল হাসান",
+                wallet: 1200,
+                connects: 250
+            };
+            updateUI();
+            closeModal('loginModal');
+        }
+
+        function logout() {
+            currentUser = null;
+            updateUI();
+        }
+
+        function updateUI() {
+            if(currentUser) {
+                document.getElementById('auth-buttons').classList.add('hidden');
+                document.getElementById('user-status').classList.remove('hidden');
+                document.getElementById('user-name').innerText = currentUser.name;
+                document.getElementById('wallet-bal').innerText = "৳" + currentUser.wallet;
+                document.getElementById('connect-bal').innerText = currentUser.connects;
+            } else {
+                document.getElementById('auth-buttons').classList.remove('hidden');
+                document.getElementById('user-status').classList.add('hidden');
+            }
+        }
+
+        function buyConnect(amount, price) {
+            if(!currentUser) {
+                alert('কানেক্ট কিনতে প্রথমে লগইন করুন।');
+                openModal('loginModal');
+                return;
+            }
+            alert(`৳${price} পেমেন্ট বিকাশ/নগদ ট্রানজেকশন সাবমিট করার পর ${amount} কানেক্ট যুক্ত হবে।`);
+        }
+
+        function buyProduct(name, price) {
+            if(!currentUser) {
+                alert('পণ্য কিনতে লগইন করুন।');
+                openModal('loginModal');
+                return;
+            }
+            if(currentUser.wallet < price) {
+                alert('আপনার ওয়ালেটে পর্যাপ্ত ব্যালেন্স নেই।');
+            } else {
+                alert(`৳${price} কেটে নেওয়া হয়েছে। অর্ডার সফল হয়েছে!`);
+            }
+        }
+    </script>
+</body>
+</html>

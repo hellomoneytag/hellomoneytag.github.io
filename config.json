@@ -1,0 +1,8 @@
+{
+    "app_name": "Moneytag",
+    "theme": "clean_white_light",
+    "commission": {
+        "freelancer_escrow_fee": 5.0,
+        "marketplace_fee": 2.5
+    }
+}
