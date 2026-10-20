@@ -1,9 +1,6 @@
-/* MoneyTag Supabase client configuration.
-   Replace both placeholders with your project's Project URL and publishable (or legacy anon) key.
-   NEVER put a service_role/secret key in a browser file. */
 (function(){
-  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY';
+  const SUPABASE_URL = 'https://rmhsislsiwnqhaxbdsev.supabase.co.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_CnCcUkl2L_Is5CL5-L_gGA_nARsYGUs';
   const looksConfigured = /^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(SUPABASE_URL) &&
     !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_PUBLISHABLE_KEY.includes('YOUR_');
   if (looksConfigured && window.supabase?.createClient) {
