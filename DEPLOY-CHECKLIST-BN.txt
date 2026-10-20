@@ -1,0 +1,17 @@
+MONEYTAG DEPLOYMENT CHECKLIST
+
+[ ] Supabase project created
+[ ] config.js has correct Project URL and anon/public key
+[ ] supabase/schema.sql executed successfully
+[ ] Email auth provider enabled
+[ ] Auth site URL and redirect URLs configured
+[ ] GitHub Pages configured and deployed
+[ ] Custom domain/DNS configured (if using moneytag.shop)
+[ ] Client registration/login tested
+[ ] Freelancer registration/login tested
+[ ] Client can post a job
+[ ] Freelancer can see the job and submit an application
+[ ] RLS policies reviewed
+[ ] No service_role/secret key in browser files
+[ ] Privacy policy completed for the actual business
+[ ] Payment features not enabled until a secure payment workflow is implemented
